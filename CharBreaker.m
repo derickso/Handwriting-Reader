@@ -23,19 +23,22 @@ while k <= length(filelist)
         end
         i = i + 1;
     end
-    toReturn = [];
+    %toReturn = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+    alph = [97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122];
+    S = char(alph);
     for j=1:size(A,1)
         I2 = imcrop(image,[A(j,1) 0 A(j,2) - A(j,1) size(image,2) ]);    % [X Y width height]
+        I2 = I2 > .4;
         % outputs results in separate figure windows
         %figure(j); clf; im;imshow(I2);     %can comment out if necessary
-        imwrite(I2,sprintf('charresults/charresult_%.2d.jpg',counter),'jpg');
+        %imwrite(I2,sprintf('charresults/charresult_%.2d.jpg',counter),'png');
+        imwrite(I2,sprintf('charresults/charresult_%.2s.png',S(counter)),'png');
         outputName = ['textoutputs\',filename num2str(counter) '.txt'];
         fileID = fopen(outputName,'w');
-        fprintf(fileID,'%.4f,',I2);
-        %fprintf(fileID,'A');
+        fprintf(fileID,'%d,',I2);
+        fprintf(fileID,S(counter));
         fclose(fileID);
         counter = counter + 1;
-        %toReturn = [toReturn; I2]; 
     end
     k = k + 1;
 end
