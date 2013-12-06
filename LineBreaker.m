@@ -1,5 +1,5 @@
-function [ toReturn ] = LineBreaker( )
-image = rgb2gray(im2double(imread('test2.jpg')));
+function [ toReturn ] = LineBreaker(fileName )
+image = rgb2gray(im2double(imread(fileName)));
 sums = sum(image <.8 , 2) > 0;
 
 %for i = 2:size(sums,1)
@@ -22,13 +22,14 @@ while (i <= size(image,1))
     end
     i = i + 1;
 end
-%toReturn = [];
+toReturn = [];
 for j=1:size(A,1)
-    I2 = imcrop(image,[0 A(j,1) size(image,1) A(j,2) - A(j,1)]);    % [X Y width height]
+    I2 = imcrop(image,[0 A(j,1) size(image,2) A(j,2) - A(j,1)]);    % [X Y width height]
     % outputs results in separate figure windows
     %figure(j); clf; imshow(I2);     %can comment out if necessary
-    imwrite(I2,sprintf('results/result_%.2d.jpg',j),'jpg');
-    %toReturn = [toReturn; I2]; 
+    
+    %imwrite(I2,sprintf('results/result_%.2d.jpg',j),'jpg');
+    toReturn = [toReturn; I2]; 
 end
 
 end
